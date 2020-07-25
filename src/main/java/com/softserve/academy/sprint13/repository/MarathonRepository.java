@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface MarathonRepository extends JpaRepository<Marathon, Long> {
+public interface MarathonRepository<Marathon> extends JpaRepository<Marathon, Long> {
 }
