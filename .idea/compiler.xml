@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Sprint13_Mututal" target="14" />
+      <module name="Sprint13_Mututal" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
