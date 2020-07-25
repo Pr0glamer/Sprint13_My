@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean addUserToMarathon(User user, Marathon mrp);
 
 
+
 }
