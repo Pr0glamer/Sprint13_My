@@ -12,7 +12,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> getAll();
     User getUserById(Integer id);
     User createOrUpdateUser(User user);
-    boolean addUserToMarathon(User user, Marathon mrp);
+
+    //TO DELETE Should be in Sevice module
+    //boolean addUserToMarathon(User user, Marathon marathon);
 
 
 
