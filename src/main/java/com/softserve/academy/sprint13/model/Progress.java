@@ -13,7 +13,7 @@ public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotNull
     private LocalDate started;

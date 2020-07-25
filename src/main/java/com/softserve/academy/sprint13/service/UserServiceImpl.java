@@ -2,6 +2,7 @@ package com.softserve.academy.sprint13.service;
 
 import com.softserve.academy.sprint13.model.Marathon;
 import com.softserve.academy.sprint13.model.User;
+import com.softserve.academy.sprint13.repository.MarathonRepository;
 import com.softserve.academy.sprint13.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private MarathonRepository marathonRepository;
 
     @Transactional
     public List<User> getAllByRole(String role){
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public User createOrUpdateUser(User entity) {
         if(entity.getId() != null) {
-            Optional<User> us = repository.findById(entity.getId());
+            Optional<User> us = repository.findById(entity.getId().intValue());
 
             if(us.isPresent()) {
                 User newUser = us.get();
@@ -52,7 +55,10 @@ public class UserServiceImpl implements UserService{
     }
     @Transactional
     public boolean addUserToMarathon(User user, Marathon mrp){
-        //TODO
+        if(user!=null && mrp!=null) {
+            mrp.getUsers().add(user);
+            marathonRepository.createOrUpdate(mrp);
+        }
         return true;
     }
 

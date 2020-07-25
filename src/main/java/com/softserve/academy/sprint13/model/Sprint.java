@@ -14,7 +14,7 @@ public class Sprint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotNull
     private LocalDate finish;

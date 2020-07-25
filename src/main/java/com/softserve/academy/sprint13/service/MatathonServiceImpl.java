@@ -14,16 +14,18 @@ public class MatathonServiceImpl {
     private MarathonRepository marathonRepository;
 
     public List<Marathon> getAll() {
+
         return marathonRepository.getAll();
     }
     public Marathon getMarathonById(Long id) {
+
         return marathonRepository.getMarathonById(id);
     }
     public Marathon createOrUpdate(Marathon entity) {
         if(entity.getId() != null) {
             Marathon marathon = marathonRepository.getMarathonById(entity.getId());
 
-            if(marathon!=null) {
+            if(marathon != null) {
 
                 Marathon newMar = new Marathon();
                 newMar.setTitle(entity.getTitle());
@@ -39,6 +41,7 @@ public class MatathonServiceImpl {
     public void deleteMarathonById(Long id) {
         Marathon entity = marathonRepository.getMarathonById(id);
         marathonRepository.deleteMarathonById(id);
+
     }
 
 

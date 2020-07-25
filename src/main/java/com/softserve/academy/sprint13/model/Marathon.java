@@ -16,39 +16,7 @@ public class Marathon {
     @NotBlank
     private String title;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<Sprint> getSprints() {
-        return sprints;
-    }
-
-    public void setSprints(List<Sprint> sprints) {
-        this.sprints = sprints;
-    }
-
-    @ManyToMany
+        @ManyToMany
     @JoinTable(
             name = "maraphon_user",
             joinColumns = @JoinColumn(name = "marathon_id"),
