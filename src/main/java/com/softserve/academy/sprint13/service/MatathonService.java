@@ -1,4 +1,14 @@
 package com.softserve.academy.sprint13.service;
 
+import com.softserve.academy.sprint13.model.Marathon;
+
+import java.util.List;
+
 public interface MatathonService {
+    public List<Marathon> getAll();
+    public Marathon getMarathonById(Long id);
+    public Marathon createOrUpdate(Marathon marathon);
+    public void deleteMarathonById(Long id);
+
+
 }
