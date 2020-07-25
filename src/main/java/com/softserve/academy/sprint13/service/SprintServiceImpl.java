@@ -4,9 +4,12 @@ import com.softserve.academy.sprint13.model.Marathon;
 import com.softserve.academy.sprint13.model.Sprint;
 import com.softserve.academy.sprint13.repository.SprintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class SprintServiceImpl implements SprintService {
     @Autowired
     private SprintRepository sprintRepository;
@@ -27,9 +30,13 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public boolean updateSprint(Sprint sprint) {
+    public boolean updateSprint(Sprint entity) {
 
-        if(sprint!=null) {
+        if(entity.getId()!=null) {
+            Sprint newSprint = new Sprint();
+            newSprint.setTitle(entity.getTitle());
+            newSprint = sprintRepository.save(newSprint);
+            return true;
 
         }
 
@@ -38,6 +45,6 @@ public class SprintServiceImpl implements SprintService {
 
     @Override
     public Sprint getSprintById(Long id) {
-        return null;
+        return sprintRepository.getSprintById(id);
     }
 }
