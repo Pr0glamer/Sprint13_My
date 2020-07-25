@@ -11,5 +11,5 @@ public interface SprintRepository extends JpaRepository<Sprint, Long> {
 
     List<Sprint> getSprintsByMarathonId (Long id);
     boolean updateSprint (Sprint sprint);
-    Sprint getSprintsById (Long id);
+    Sprint getSprintById (Long id);
 }
