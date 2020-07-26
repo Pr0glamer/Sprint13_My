@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class MarathonServiceImpl implements MatathonService {
+public class MarathonServiceImpl implements MarathonService {
 
     final private MarathonRepository marathonRepository;
 

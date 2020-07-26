@@ -24,7 +24,7 @@ public class User {
     @NotBlank
     private String role;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
     private List<Marathon> marathons;
 
     @OneToMany(mappedBy = "user")

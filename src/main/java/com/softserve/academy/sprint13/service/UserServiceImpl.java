@@ -71,6 +71,10 @@ public class UserServiceImpl implements UserService {
         Optional<Marathon> marathonFromBd = marathonRepository.findById(marathon.getId());
         if (marathonFromBd.isPresent()) {
             List<User> users = marathonFromBd.get().getUsers();
+            if(users == null) {
+                users = new ArrayList<>();
+            }
+
             if (!users.contains(user)) {
                 users.add(user);
                 marathonFromBd.get().setUsers(users);

@@ -16,8 +16,8 @@ public class Marathon {
     @NotBlank
     private String title;
 
-        @ManyToMany
-    @JoinTable(
+     @ManyToMany(fetch = FetchType.EAGER)
+     @JoinTable(
             name = "maraphon_user",
             joinColumns = @JoinColumn(name = "marathon_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))

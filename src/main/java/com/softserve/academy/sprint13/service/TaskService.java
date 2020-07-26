@@ -10,4 +10,5 @@ public interface TaskService {
 
     public Task addTaskToSprint(Task task, Sprint sprint) throws EntityNotFoundException;
     public Task getTaskById(Long id) throws EntityNotFoundException;
+    Task createTask(Task task);
 }
