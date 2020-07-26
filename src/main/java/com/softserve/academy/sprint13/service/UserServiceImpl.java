@@ -1,6 +1,8 @@
 package com.softserve.academy.sprint13.service;
 
+import com.softserve.academy.sprint13.exception.EntityNotFoundException;
 import com.softserve.academy.sprint13.model.Marathon;
+import com.softserve.academy.sprint13.model.Task;
 import com.softserve.academy.sprint13.model.User;
 import com.softserve.academy.sprint13.repository.MarathonRepository;
 import com.softserve.academy.sprint13.repository.UserRepository;
@@ -8,58 +10,93 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+@Transactional
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository repository;
-    @Autowired
-    private MarathonRepository marathonRepository;
+    final private UserRepository userRepository;
+    final private MarathonRepository marathonRepository;
 
-    @Transactional
-    public List<User> getAllByRole(String role){
-        return repository.getAllByRole(role);
+    public UserServiceImpl(UserRepository userRepository, MarathonRepository marathonRepository) {
+        this.userRepository = userRepository;
+        this.marathonRepository = marathonRepository;
     }
-    @Transactional
+
+    @Override
     public List<User> getAll() {
-        return repository.getAll();
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return users;
     }
-    @Transactional
-    public User getUserById(Integer id) {
-        return repository.getUserById(id);
+
+    @Override
+    public User getUserById(Long id) throws EntityNotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new EntityNotFoundException("There isn't user with id = " + id);
+        }
     }
-    @Transactional
+
+    @Override
     public User createOrUpdateUser(User entity) {
-        if(entity.getId() != null) {
-            Optional<User> us = repository.findById(entity.getId().intValue());
-
-            if(us.isPresent()) {
-                User newUser = us.get();
-                newUser.setEmail(entity.getEmail());
-                newUser.setFirst_name(entity.getFirst_name());
-                newUser.setLast_name(entity.getFirst_name());
-                newUser.setPassword(entity.getPassword());
-                newUser.setRole(entity.getRole());
-                newUser = repository.save(newUser);
-                return newUser;
-
-            }
-
+        if (entity.getId() != null) {
+            Optional<User> user = userRepository.findById(entity.getId());
+            User newUser = user.get();
+            newUser.setEmail(entity.getEmail());
+            newUser.setFirstName(entity.getFirstName());
+            newUser.setLastName(entity.getLastName());
+            newUser.setPassword(entity.getPassword());
+            newUser = userRepository.save(newUser);
+            return newUser;
         }
-        entity = repository.save(entity);
+        entity = userRepository.save(entity);
         return entity;
+    }
 
+    @Override
+    public List<User> getAllByRole(String role) {
+        return userRepository.getAllByRole(role);
     }
-    @Transactional
-    public boolean addUserToMarathon(User user, Marathon mrp){
-        if(user!=null && mrp!=null) {
-            mrp.getUsers().add(user);
-            marathonRepository.createOrUpdate(mrp);
+
+    @Override
+    public boolean addUserToMarathon(User user, Marathon marathon) throws EntityNotFoundException {
+        Optional<Marathon> marathonFromBd = marathonRepository.findById(marathon.getId());
+        if (marathonFromBd.isPresent()) {
+            List<User> users = marathonFromBd.get().getUsers();
+            if (!users.contains(user)) {
+                users.add(user);
+                marathonFromBd.get().setUsers(users);
+                marathonRepository.save(marathonFromBd.get());
+                return true;
+            }
+        } else {
+            throw new EntityNotFoundException("There isn't marathon " + marathon.getTitle());
         }
-        return true;
+        return false;
     }
+
+
+    public boolean addUserToTask(User user, Task task) {
+        return false;
+    }
+
+
+    public boolean delete(User user) {
+        Optional<User> deleted = userRepository.findById(user.getId());
+        if (deleted.isPresent()) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
+
 
 }

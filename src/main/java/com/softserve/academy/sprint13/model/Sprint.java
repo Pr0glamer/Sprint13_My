@@ -30,7 +30,7 @@ public class Sprint {
     @JoinColumn(name = "marathon_id")
     private Marathon marathon;
 
-    @OneToMany(mappedBy = "sprints")
+    @OneToMany(mappedBy = "sprint")
     private List<Task> tasks;
 
 }

@@ -24,6 +24,8 @@ public class Progress {
     private String status;
 
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
     private Task task;
