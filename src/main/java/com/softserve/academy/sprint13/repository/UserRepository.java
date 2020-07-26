@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-   @Query("select u from user u where s.role=:role")
+   @Query(value = "select * from user u where s.role=:role", nativeQuery = true)
    List<User> getAllByRole(@Param("role") String role);
 
 }

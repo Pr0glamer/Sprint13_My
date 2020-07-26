@@ -12,17 +12,17 @@ import java.util.List;
 @Repository
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
 
-    @Query("select p from progress p" +
+    @Query(value = "select * from progress p" +
             "inner join marathon_user mu " +
             "on mu.user_id = p.trainee_id " +
-            "where mu.marathon_id = :marathonId and mu.user_id=:user_id")
+            "where mu.marathon_id = :marathonId and mu.user_id=:user_id", nativeQuery = true)
     List<Progress> allProgressByUserIdAndMarathonId(@Param("user_id")Long userId, @Param("marathonId")Long marathonId);
 
-    @Query("select p from progress p" +
-            "inner join task t " +
+    @Query(value = "select * from Progress p" +
+            "inner join Task t " +
             "on t.id = p.task_id " +
-            "where t.sprint_id = :sprint_id and p.trainee_id=:user_id")
+            "where t.sprint_id = :sprint_id and p.trainee_id=:user_id", nativeQuery = true)
 
-    List<Progress> allProgressByUserIdAndSprintId(@Param("user_id")Long userId, @Param("sprintId")Long sprintId);
+    List<Progress> allProgressByUserIdAndSprintId(@Param("user_id")Long userId, @Param("sprint_id")Long sprintId);
 
 }

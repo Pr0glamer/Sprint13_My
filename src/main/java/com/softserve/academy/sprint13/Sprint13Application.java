@@ -46,6 +46,7 @@ public class Sprint13Application implements CommandLineRunner {
         user.setFirstName("Nick");
         user.setLastName("Doe");
         user.setPassword("12345");
+        user.setEmail("nick@doe.com");
         userRepository.save(user);
 
         System.out.println("-------------------------------------");

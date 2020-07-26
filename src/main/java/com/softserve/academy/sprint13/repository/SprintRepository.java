@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface SprintRepository extends JpaRepository<Sprint, Long> {
 
-    @Query("select s from sprint s where s.marathon_id = :id")
+    @Query(value = "select * from sprint s where s.marathon_id = :id", nativeQuery = true)
     List<Sprint> getSprintsByMarathonId (@Param("id")Long id);
 
 }
